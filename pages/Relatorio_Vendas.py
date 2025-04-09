@@ -3,7 +3,6 @@ import plotly.express as px
 from utils import carregar_planilhas
 import pandas as pd
 import locale
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 st.set_page_config(
     page_title="Relatório de Vendas",
