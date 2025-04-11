@@ -3,6 +3,7 @@ import plotly.express as px
 from utils import carregar_planilhas
 import pandas as pd
 import locale
+from datetime import datetime
 
 st.set_page_config(
     page_title="Relatório de Vendas",
@@ -13,13 +14,31 @@ st.set_page_config(
 st.title("📊 Relatório de Vendas")
 relatorio, _, _ = carregar_planilhas()
 
+# Obtém a lista de abas (supondo que elas sejam nomes de meses)
 abas_relatorio = list(relatorio.keys())
-opcao = st.selectbox("Mês", abas_relatorio)
+
+# Cria uma lista com os nomes dos meses em minúsculo para comparação
+meses = [
+    "janeiro", "fevereiro", "março", "abril", "maio", "junho", 
+    "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+]
+
+# Mapeia o mês atual para o nome correspondente
+mes_atual = meses[datetime.now().month - 1]
+
+# Procura o índice da aba que corresponda ao mês atual (comparação case insensitive)
+default_index = 0  # fallback caso não encontre
+for idx, aba in enumerate(abas_relatorio):
+    if aba.lower() == mes_atual:
+        default_index = idx
+        break
+
+# Cria o selectbox utilizando o índice padrão
+opcao = st.selectbox("Mês", abas_relatorio, index=default_index)
 df = relatorio[opcao]
 
-# Verifica se é uma aba de mês (por ex. "Janeiro", "Fevereiro", "Março")
-eh_mes = any(mes in opcao.lower() for mes in ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-                                              'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'])
+# Verifica se é uma aba de mês (por ex. "Janeiro", "Fevereiro", "Março", etc.)
+eh_mes = any(mes in opcao.lower() for mes in meses)
 
 if eh_mes:
     # Converte as colunas numéricas (caso estejam como texto)
@@ -30,9 +49,9 @@ if eh_mes:
     total_meta = df['META'].sum()
     total_vendas = df['VENDAS 2025'].sum()
     falta_meta = total_meta - total_vendas
-    dias_passados = 31  # Março tem 31 dias, pode ser automatizado se quiser
+    dias_passados = 31  # Março tem 31 dias, pode ser automatizado se necessário
     vendas_dia = total_vendas / dias_passados
-    previsao_fechamento = df ['PREVISÃO DE FECHAMENTO'].sum()  # manter proporcional à média
+    previsao_fechamento = df['PREVISÃO DE FECHAMENTO'].sum()  # manter proporcional à média
 
     # Layout de métricas
     col1, col2, col3, col4 = st.columns(4)
@@ -57,11 +76,9 @@ with col1:
     st.plotly_chart(fig_comparativo, use_container_width=True)
 
 with col2:
-    colunas_para_mostrar = ['LOJA', 'VENDAS 2025', 'VENDAS 2024', 'META', 'PREVISÃO DE FECHAMENTO', ]
+    colunas_para_mostrar = ['LOJA', 'VENDAS 2025', 'VENDAS 2024', 'META', 'PREVISÃO DE FECHAMENTO']
     df_visivel = df[colunas_para_mostrar]
-
     st.dataframe(df_visivel, use_container_width=True)
-
 
 # Gráfico de barras (Meta x Venda Atual), se colunas existirem
 if "META" in df.columns and "VENDAS 2025" in df.columns:
