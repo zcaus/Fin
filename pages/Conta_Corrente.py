@@ -140,11 +140,26 @@ if "Categorias" not in st.session_state:
 
 st.title("📘 Conta Corrente")
 
-# INCLUIR O FILTRO DE ABA (Selecionar a aba desejada do arquivo Excel)
+# Lista de meses em português (em caixa alta e com acentuação, conforme suas abas no Excel)
+meses = [
+    "JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", 
+    "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"
+]
+
+# Obtém o mês atual como string (ex.: "MARÇO")
+mes_atual = meses[datetime.now().month - 1]
+
 if os.path.exists(EXCEL_CONTA_FILE):
     xls = pd.ExcelFile(EXCEL_CONTA_FILE)
     abas_conta = xls.sheet_names
-    opcao = st.selectbox("Mês:", abas_conta)
+    
+    # Tenta definir a aba padrão para o mês atual
+    if mes_atual in abas_conta:
+        default_index = abas_conta.index(mes_atual)
+    else:
+        default_index = 0  # Fallback: usa a primeira aba se o mês atual não estiver presente
+    
+    opcao = st.selectbox("Mês:", abas_conta, index=default_index)
 else:
     opcao = "MARÇO"  # Valor padrão se o arquivo não existir (apenas para não travar)
 
