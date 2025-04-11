@@ -217,8 +217,7 @@ else:
 
 col1, col2 = st.columns(2)
 with col1:
-    st.subheader("💰 Faturamento x Compras")
-
+    # Cria o gráfico de barras horizontal já existente
     fig = go.Figure(go.Bar(
         x=[resultado_faturamento_calculado, total_compras_registradas],
         y=["Faturamento", "Compras"],
@@ -226,13 +225,26 @@ with col1:
         marker_color=['#244610', '#c3670d']
     ))
 
+    # Adiciona a linha pontilhada no limite de compra
+    fig.add_shape(
+        type="line",
+        x0=limite_calculado, x1=limite_calculado,  # Posição no eixo X (limite de compra)
+        y0=0, y1=1,  # A linha cobre a totalidade do gráfico no eixo Y (referenciado em "paper")
+        xref="x",
+        yref="paper",
+        line=dict(
+            dash="dot",  # Linha pontilhada
+            color="red",
+            width=2
+        )
+    )
+
     fig.update_layout(
         xaxis_title="Valor (R$)",
         yaxis_title="Categoria",
         height=250,
         margin=dict(l=1, r=1, t=20, b=1)
     )
-
     st.plotly_chart(fig, use_container_width=True)
 with col2:
     st.subheader("📊 Distribuição das Compras (%)")
