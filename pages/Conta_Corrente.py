@@ -12,6 +12,16 @@ st.set_page_config(
     layout="wide",
 )
 
+st.markdown(
+    """
+    <style>
+        section[data-testid="stSidebar"] {display: none;}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
 BASE_DATA_DIR = "data"           # Pasta onde as planilhas estarão
 BASE_IMAGE_DIR = "images"         # Pasta onde as imagens estarão (caso queira utilizá-las)
 EXCEL_DADOS_FILE = os.path.join(BASE_DATA_DIR, "conta_corrente.xlsx")          # Arquivo Excel principal para o dashboard
@@ -137,6 +147,17 @@ data = load_data_from_excel_layout_vertical()
 
 if "Categorias" not in st.session_state:
     st.session_state.Categorias = sorted(data["Categoria"].unique().tolist()) if not data.empty else []
+
+col1, col2 ,col3, col4 = st.columns(4)
+
+with col1:
+        st.page_link("Inicio.py", label="Dashboard", icon="📊")
+with col2:
+        st.page_link("pages/Compras.py", label="Compras", icon="📇")
+with col3:
+        st.page_link("pages/Conta_Corrente.py", label="Conta Corrente", icon="💻")
+with col4:
+        st.page_link("pages/Relatorio_Vendas.py", label="Relatório de Vendas", icon="💳")
 
 st.title("📘 Conta Corrente")
 
