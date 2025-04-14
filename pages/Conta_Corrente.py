@@ -216,26 +216,12 @@ else:
     col4.metric("Descontos", format_currency(descontos))
     col5.metric("Perdas", format_currency(perdas))
     col6.metric("Faturamento Líquido", format_currency(resultado_faturamento_calculado))
-    
-    st.markdown("---")
-
-    st.subheader("🛒 Compras Realizadas")
-            
+         
     compras_para_aprovar = df.loc[df["Descricao"] == "COMPRAS PARA APROVAR (PENDENTE)", "Valor"].values[0]
     compras_em_transito = df.loc[df["Descricao"] == "COMPRAS EM TRÂNSITO", "Valor"].values[0]
     total_compras_nf = df.loc[df["Descricao"] == "TOTAL COMPRAS NOTA FISCAL", "Valor"].values[0]
     total_compras_nota_especial = df.loc[df["Descricao"] == "TOTAL COMPRAS NOTA ESPECIAL", "Valor"].values[0]
     total_compras_registradas = total_compras_nf + total_compras_nota_especial
-
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Limite de Compra", format_currency(limite_calculado))
-    col2.metric("Saldo Disponível", format_currency(saldo_disponivel))
-    col3.metric("Nota Especial", format_currency(total_compras_nota_especial))
-
-    colc1, colc2, colc3 = st.columns(3)
-    colc1.metric("Compras P/ Aprovar", format_currency(compras_para_aprovar))
-    colc2.metric("Compras em Trânsito", format_currency(compras_em_transito))
-    colc3.metric("Compras NF", format_currency(total_compras_nf))
 
     st.markdown("---")
 

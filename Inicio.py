@@ -402,7 +402,7 @@ if not data_filtrada_view.empty:
             use_container_width=True
         )
 else:
-        st.warning("⚠ Nenhuma transação encontrada com os filtros aplicados.")
+        st.warning("⚠️ Nenhuma transação encontrada com os filtros aplicados.")
     
     # Exportação de Dados
 st.header("📤 Exportar Dados")
