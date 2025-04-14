@@ -245,12 +245,12 @@ with col_resumo1:
 with col_resumo2:
         st.metric(label="🛒 Despesas", value=format_currency(despesas))
 with col_resumo3:
-        st.metric(label="⚖ Saldo", value=format_currency(saldo))
+        st.metric(label="⚖️ Saldo", value=format_currency(saldo))
 
 if saldo > 0:
-        st.success("🎉 Você está em lucro nesse mês!")
+        st.success("🎉 Estamos em lucro nesse mês!")
 elif saldo < 0:
-        st.error("⚠ Você está em prejuízo nesse mês!")
+        st.error("⚠️ Estamos em prejuízo nesse mês!")
 else:
         st.info("🔄 O saldo deste mês está equilibrado.")
 
@@ -337,17 +337,18 @@ if not data.empty:
         df_compare = df_compare.sort_values(by="Mes")
         
         fig_lucro = px.bar(
-            df_compare,
-            x="MesNome",
-            y="Lucro",
-            color="Ano",
-            barmode="group",
-            title="Comparativo Mensal de Lucro/Prejuízo entre Anos",
-            labels={"Lucro": "Lucro/Prejuízo (R$)", "MesNome": "Mês"}
-        )
+        df_compare,
+        x="MesNome",
+        y="Lucro",
+        color="Ano",
+        barmode="group",
+        title="Comparativo Mensal de Lucro/Prejuízo entre Anos",
+        labels={"Lucro": "Lucro/Prejuízo (R$)", "MesNome": "Mês"},
+
+    )
         st.plotly_chart(fig_lucro, use_container_width=True)
 else:
-        st.warning("⚠ Nenhuma transação registrada para gerar o gráfico de lucro/prejuízo.")
+        st.warning("⚠️ Nenhuma transação registrada para gerar o gráfico de lucro/prejuízo.")
 
     # Registros Detalhados com Filtros por Categoria e Mês
 st.header("📋 Registros Detalhados")
