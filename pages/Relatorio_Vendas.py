@@ -32,7 +32,10 @@ with col3:
 with col4:
         st.page_link("pages/Relatorio_Vendas.py", label="Relatório de Vendas", icon="💳")
 
-st.title("📊 Relatório de Vendas")
+st.markdown(
+    "<h1 style='text-align: center; color: #FFFFFF;'>📊 Relatório de Vendas</h1>",
+    unsafe_allow_html=True
+)
 relatorio, _, _ = carregar_planilhas()
 
 # Obtém a lista de abas (supondo que elas sejam nomes de meses)
@@ -115,7 +118,10 @@ if eh_mes:
     df_relatorio['META'] = pd.to_numeric(df_relatorio['META'], errors='coerce')
     df_relatorio['VENDAS 2025'] = pd.to_numeric(df_relatorio['VENDAS 2025'], errors='coerce')
 
-    st.markdown("### Performance por Loja")
+    st.markdown(
+    "<h2 style='text-align: center; color: #FFFFFF;'>Performance por Loja</h2>",
+    unsafe_allow_html=True
+)
 
 col1, col2 = st.columns(2)
 with col1:    # Lojas que bateram a meta

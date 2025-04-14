@@ -159,7 +159,10 @@ with col3:
 with col4:
         st.page_link("pages/Relatorio_Vendas.py", label="Relatório de Vendas", icon="💳")
 
-st.title("📘 Conta Corrente")
+st.markdown(
+    "<h1 style='text-align: center; color: #FFFFFF;'>📘 Conta Corrente</h1>",
+    unsafe_allow_html=True
+)
 
 # Lista de meses em português (em caixa alta e com acentuação, conforme suas abas no Excel)
 meses = [

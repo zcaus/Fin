@@ -231,7 +231,10 @@ with col4:
 
 
 # Cabeçalho do Dashboard
-st.title("Controle Financeiro")
+st.markdown(
+    "<h1 style='text-align: center; color: #FFFFFF;'>Controle Financeiro</h1>",
+    unsafe_allow_html=True
+)
 
     # Filtro para o resumo do mês selecionado
 col_filtro1, col_filtro2, col_filtro3, colfiltro4, colfiltro5, colfiltro6 = st.columns(6)
@@ -328,13 +331,10 @@ with col2:
 
 st.markdown("---")
     # Gráfico Comparativo de Lucro/Prejuízo entre Anos
-col1, col2, col3 = st.columns(3)
-with col1:
-        st.header("")
-with col2:
-        st.header("Comparativo Geral")
-with col3:
-        st.header("")
+st.markdown(
+    "<h2 style='text-align: center; color: #FFFFFF;'>Comparativo Geral</h2>",
+    unsafe_allow_html=True
+)
     
 if not data.empty:
         data["Lucro"] = data.apply(lambda row: row["Valor"] if row["Tipo"] == "Receita" else -row["Valor"], axis=1)
@@ -373,7 +373,10 @@ else:
         st.warning("⚠️ Nenhuma transação registrada para gerar o gráfico de lucro/prejuízo.")
 
     # Registros Detalhados com Filtros por Categoria e Mês
-st.header("📋 Registros Detalhados")
+st.markdown(
+    "<h2 style='text-align: center; color: #FFFFFF;'>📋 Registros Detalhados</h2>",
+    unsafe_allow_html=True
+)
 col_reg1, col_reg2 = st.columns(2)
 with col_reg1:
         filtro_categoria = st.selectbox("Filtrar por Categoria", ["Todos"] + st.session_state.Categorias, key="filtro_categoria")

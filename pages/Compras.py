@@ -30,14 +30,18 @@ with col4:
         st.page_link("pages/Relatorio_Vendas.py", label="Relatório de Vendas", icon="💳")
 
 
-st.title("📦 Controle de Compras")
+st.markdown(
+    "<h1 style='text-align: center; color: #FFFFFF;'>📦 Controle de Compras</h1>",
+    unsafe_allow_html=True
+)
+
 _, _, compras = carregar_planilhas()
 
 abas_compras = list(compras.keys())
 opcao = st.selectbox("Escolha uma aba da planilha de Compras:", abas_compras)
 df = compras[opcao]
 
-st.dataframe(df)
+st.dataframe(df,use_container_width=True)
 
 if "Status" in df.columns:
     fig = px.histogram(df, x="Status", color="Status", title="Situação das Compras")
