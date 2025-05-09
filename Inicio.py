@@ -239,12 +239,19 @@ st.markdown(
     # Filtro para o resumo do mês selecionado
 col_filtro1, col_filtro2, col_filtro3, colfiltro4, colfiltro5, colfiltro6 = st.columns(6)
 with col_filtro1:
+        
+        mes_atual = datetime.today().month
+        ano_atual = datetime.today().year
+        mes_anterior = mes_atual - 1 if mes_atual > 1 else 12
+        ano_anterior = ano_atual if mes_atual > 1 else ano_atual - 1
+
         filtro_mes = st.selectbox(
             "Selecione o Mês",
             list(range(1, 13)),
             index=datetime.today().month - 1,
             key="resumo_mes"
         )
+
 with col_filtro2:
         filtro_ano = st.number_input(
             "Selecione o Ano",
