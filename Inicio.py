@@ -248,7 +248,7 @@ with col_filtro1:
         filtro_mes = st.selectbox(
             "Selecione o Mês",
             list(range(1, 13)),
-            index=datetime.today().month - 1,
+            index=mes_anterior - 1,
             key="resumo_mes"
         )
 
